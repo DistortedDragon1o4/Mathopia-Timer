@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Mathopia</title>
+		<!-- <link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/gh/vsalvino/computer-modern@main/fonts/sans.css"
+			rel="stylesheet"
+		/> -->
+		<link
+			href="https://cdn.jsdelivr.net/gh/vsalvino/computer-modern@main/fonts/sans.css"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/gh/vsalvino/computer-modern@main/fonts/serif.css"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/gh/vsalvino/computer-modern@main/fonts/bright.css"
+			rel="stylesheet"
+		/>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				background: transparent;
+			}
+
+			:root {
+				--primary: #4e8cff;
+				--secondary: #6f42c1;
+				--accent: #ff6b6b;
+				--dark: #0f192d;
+				--light: #f8f9fa;
+				--sans-font: "Computer Modern Sans", sans;
+				--serif-font: "Computer Modern", serif;
+			}
+
+			/* @import url("https://cdn.jsdelivr.net/gh/vsalvino/computer-modern@main/fonts/sans.css"); */
+
+			body {
+				/* background:
+					linear-gradient(
+						rgba(15, 25, 45, 0.9),
+						rgba(15, 25, 45, 0.95)
+					),
+					url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><rect width="100%" height="100%" fill="%231a2b4a"/><path d="M0,0 L400,400 M400,0 L0,400" stroke="%233a5f8a" stroke-width="1.5" opacity="0.4"/><circle cx="200" cy="200" r="160" stroke="%233a5f8a" stroke-width="1.5" fill="none" opacity="0.4"/><path d="M40,200 Q200,40 360,200 T200,360" stroke="%233a5f8a" stroke-width="1.5" fill="none" opacity="0.4"/><text x="100" y="100" font-size="20" fill="%233a5f8a" opacity="0.6">∫x²dx</text><text x="300" y="300" font-size="20" fill="%233a5f8a" opacity="0.6">πr²</text><text x="60" y="340" font-size="20" fill="%233a5f8a" opacity="0.6">α+β=γ</text><text x="240" y="60" font-size="20" fill="%233a5f8a" opacity="0.6">e=mc²</text><text x="180" y="200" font-size="24" fill="%233a5f8a" opacity="0.3" font-weight="bold">MATHOPIA</text></svg>'); */
+				background: url("assets/background.webp");
+				background-size: cover;
+				background-position: right;
+				color: var(--light);
+				min-height: 100vh;
+				/* display: flex; */
+				justify-content: center;
+				align-items: center;
+				padding: 20px;
+				overflow: hidden;
+				font-family: var(--serif-font);
+			}
+
+			.container {
+				width: 100%;
+				text-align: center;
+				position: relative;
+				overflow: hidden;
+				display: flex;
+			}
+
+			.left-container {
+				width: 30%;
+			}
+
+			.right-container {
+				width: 70%;
+				align-content: center;
+				align-items: center;
+			}
+
+			.container::before {
+				content: "";
+				position: absolute;
+				top: -50%;
+				left: -50%;
+				width: 200%;
+				height: 200%;
+				z-index: -1;
+			}
+
+			.header {
+				margin: 30px 80px;
+				display: flex;
+			}
+
+			.heading {
+				width: 85%;
+				text-align: center;
+				align-items: center;
+				align-content: center;
+				gap: 15px;
+			}
+
+			.logo {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 15px;
+			}
+
+			.logo-img {
+				font-size: 3.5rem;
+				color: var(--primary);
+				width: 120px;
+				height: 120px;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			h1 {
+				font-size: 3.5rem;
+				margin-bottom: 10px;
+				font-family: "Computer Modern Serif", serif;
+				font-weight: 300;
+				letter-spacing: 1px;
+				color: var(--light);
+				text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+				position: relative;
+				display: inline-block;
+			}
+
+			.subtitle {
+				font-size: 1.3rem;
+				color: #a0c1ff;
+				max-width: 600px;
+				margin: 10px auto 20px;
+				line-height: 1.6;
+				font-style: italic;
+			}
+
+			.timer-section {
+				margin: 40px 0;
+				display: flex;
+				justify-content: center;
+			}
+
+			.circular-timer-container {
+				position: relative;
+				width: 320px;
+				height: 320px;
+				margin: 0 auto;
+			}
+
+			.circular-bg {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+				background: rgba(6, 15, 36, 0.6);
+				border: 1px solid rgba(78, 140, 255, 0.3);
+				backdrop-filter: blur(4px);
+			}
+
+			.progress-ring {
+				position: relative;
+				width: 100%;
+				height: 100%;
+				transform: rotate(-90deg);
+			}
+
+			.progress-ring-circle {
+				fill: transparent;
+				stroke: var(--primary);
+				stroke-width: 10;
+				stroke-linecap: round;
+
+				transition:
+					stroke 300s linear,
+					stroke-dashoffset 1s linear;
+			}
+
+			.progress-track {
+				fill: transparent;
+				stroke: rgba(255, 255, 255, 0.1);
+				stroke-width: 10;
+			}
+
+			.timer-display {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				text-align: center;
+				width: 100%;
+			}
+
+			.timer-value {
+				font-size: 3.5rem;
+				font-weight: 400;
+				color: var(--light);
+				font-family: "Computer Modern Serif", "serif";
+				letter-spacing: 2px;
+				margin-bottom: 5px;
+			}
+
+			.timer-label {
+				font-size: 1.2rem;
+				color: #a0c1ff;
+				text-transform: uppercase;
+				letter-spacing: 3px;
+				margin-top: 10px;
+				font-family: var(--sans-font);
+			}
+
+			.start-container {
+				margin: 30px 0;
+			}
+
+			.start-btn {
+				padding: 16px 45px;
+				font-size: 1.4rem;
+				background: linear-gradient(
+					45deg,
+					var(--primary),
+					var(--secondary)
+				);
+				color: white;
+				border: none;
+				border-radius: 50px;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				position: relative;
+				overflow: hidden;
+				font-weight: 600;
+				letter-spacing: 1px;
+				font-family: var(--sans-font);
+			}
+
+			.start-btn:hover {
+				transform: translateY(-5px);
+				background: linear-gradient(45deg, #5d9bff, #7f52d1);
+			}
+
+			.start-btn:active {
+				transform: translateY(0);
+			}
+
+			.contest-info {
+				display: flex;
+				justify-content: center;
+				gap: 25px;
+				margin: 40px 0;
+				flex-wrap: wrap;
+			}
+
+			.info-card {
+				padding: 20px;
+				border-radius: 12px;
+				min-width: 180px;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				transition: transform 0.3s ease;
+			}
+
+			.info-card:hover {
+				transform: translateY(-5px);
+			}
+
+			.info-card h3 {
+				color: #a0c1ff;
+				margin-bottom: 12px;
+				font-size: 1.1rem;
+				font-family: var(--sans-font);
+			}
+
+			.info-card p {
+				font-size: 1.3rem;
+				font-weight: 600;
+			}
+
+			.instructions {
+				margin: 40px 30px;
+				padding: 25px;
+				background: rgba(6, 15, 36, 0.6);
+				border-radius: 30px;
+				text-align: left;
+				backdrop-filter: blur(8px);
+			}
+
+			.instructions h2 {
+				color: #a0c1ff;
+				margin-bottom: 20px;
+				text-align: center;
+				font-family: "Computer Modern Sans", sans-serif;
+				font-size: 2.5rem;
+			}
+
+			.instructions ul {
+				padding-left: 30px;
+				margin-bottom: 15px;
+			}
+
+			.instructions li {
+				margin-bottom: 12px;
+				line-height: 1.6;
+				font-size: 1.1rem;
+			}
+
+			.action-buttons {
+				margin-top: 30px;
+				display: flex;
+				justify-content: center;
+				gap: 20px;
+				flex-wrap: wrap;
+			}
+
+			.btn {
+				padding: 12px 30px;
+				border: none;
+				border-radius: 50px;
+				font-size: 1.1rem;
+				font-weight: 600;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				font-family: var(--sans-font);
+			}
+
+			.btn-primary {
+				background: linear-gradient(
+					45deg,
+					var(--primary),
+					var(--secondary)
+				);
+				color: white;
+			}
+
+			.btn-secondary {
+				background: transparent;
+				color: #a0c1ff;
+				border: 2px solid var(--primary);
+			}
+
+			.btn:hover {
+				transform: translateY(-3px);
+			}
+
+			.footer {
+				margin-top: 40px;
+				color: #6c8dbd;
+				font-size: 0.9rem;
+				padding-top: 20px;
+				border-top: 1px solid rgba(255, 255, 255, 0.1);
+			}
+
+			@media (max-width: 768px) {
+				.container {
+					padding: 30px 20px;
+				}
+
+				h1 {
+					font-size: 2.8rem;
+				}
+
+				.circular-timer-container {
+					width: 280px;
+					height: 280px;
+				}
+
+				.timer-value {
+					font-family: "Computer Modern Serif Slanted", serif;
+					font-size: 2.8rem;
+					transition: color 1s linear;
+				}
+
+				.contest-info {
+					gap: 15px;
+				}
+
+				.info-card {
+					min-width: 150px;
+					padding: 15px;
+				}
+			}
+
+			@media (max-width: 480px) {
+				h1 {
+					font-size: 2.3rem;
+				}
+
+				.circular-timer-container {
+					width: 250px;
+					height: 250px;
+				}
+
+				.timer-value {
+					font-size: 2.3rem;
+				}
+
+				.contest-info {
+					flex-direction: column;
+					align-items: center;
+				}
+
+				.info-card {
+					width: 100%;
+					max-width: 250px;
+				}
+
+				.action-buttons {
+					flex-direction: column;
+					gap: 15px;
+				}
+
+				.btn {
+					width: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<div class="logo">
+				<image class="logo-img" src="assets/logique-logo.svg" />
+			</div>
+			<div class="heading">
+				<h1><span style="font-size: 5rem">M</span>ATHOPIA — 2025</h1>
+			</div>
+		</div>
+		<div class="container">
+			<div class="left-container">
+				<div class="timer-section">
+					<div class="circular-timer-container">
+						<div class="circular-bg"></div>
+						<svg class="progress-ring" width="320" height="320">
+							<circle
+								class="progress-track"
+								r="150"
+								cx="160"
+								cy="160"
+							></circle>
+							<circle
+								class="progress-ring-circle"
+								r="150"
+								cx="160"
+								cy="160"
+								stroke-dasharray="942"
+								stroke-dashoffset="0"
+							></circle>
+						</svg>
+						<div class="timer-display">
+							<div class="timer-value" id="time">03:00:00</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="start-container">
+					<button id="startBtn" class="start-btn">
+						<i class="fas fa-play-circle"></i> Start Contest
+					</button>
+				</div>
+			</div>
+
+			<div class="right-container">
+				<div class="instructions">
+					<h2>Contest Instructions</h2>
+					<ul>
+						<li>Contest duration is 3 hours.</li>
+						<li>The maximum obtainable marks is 102.</li>
+						<li>
+							Write your name and your school's name clearly on
+							the top of your answer scipt.
+						</li>
+						<li>Calculators (in any form) are not allowed.</li>
+						<li>
+							No marks will be awarded for stating an answer
+							without justification.
+						</li>
+						<li>
+							Clearly indicate the question number when writing
+							your answer.
+						</li>
+						<li>
+							Attach rough sheets used with the answer script.
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				// Set the duration for the contest (3 hours in milliseconds)
+				const totalDuration = 3 * 60 * 60 * 1000;
+				let startTime = 0;
+				let remainingTime = totalDuration;
+				let timerInterval = null;
+
+				// Get DOM elements
+				const startBtn = document.getElementById("startBtn");
+				const timeElement = document.getElementById("time");
+				const progressCircle = document.querySelector(
+					".progress-ring-circle",
+				);
+
+				// Calculate the circumference of the circle (2 * π * r)
+				const radius = 150;
+				const circumference = 2 * Math.PI * radius;
+
+				// Initialize the circle
+				progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+				progressCircle.style.strokeDashoffset = circumference;
+
+				// Initialize the timer display
+				updateDisplay();
+
+				// Add event listener to the start button
+				startBtn.addEventListener("click", startTimer);
+
+				function startTimer() {
+					if (timerInterval) {
+						clearInterval(timerInterval);
+					}
+
+					// Disable the start button
+					startBtn.disabled = true;
+					startBtn.style.visibility = "hidden";
+					// 	'<i class="fas fa-running"></i> CONTEST IN PROGRESS';
+					// startBtn.classList.add("disabled");
+
+					// Start the countdown
+					startTime = Date.now();
+					timerInterval = setInterval(updateTimer, 1000);
+				}
+
+				function updateTimer() {
+					remainingTime = totalDuration - Date.now() + startTime;
+
+					if (remainingTime <= -1000) {
+						clearInterval(timerInterval);
+						remainingTime = 0;
+						timeElement.style.color = "#ff6b6b";
+						return;
+					}
+
+					updateDisplay();
+				}
+
+				function updateDisplay() {
+					// Calculate time components
+					const hours = Math.max(
+						0,
+						Math.floor(remainingTime / (1000 * 60 * 60)),
+					);
+					const minutes = Math.max(
+						0,
+						Math.floor(
+							(remainingTime % (1000 * 60 * 60)) / (1000 * 60),
+						),
+					);
+					const seconds = Math.max(
+						0,
+						Math.ceil((remainingTime % (1000 * 60)) / 1000),
+					);
+
+					// Update display
+					timeElement.textContent = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+					// Update progress bar
+					const progressPercent =
+						(Math.ceil(remainingTime / 1000) * 1000) /
+						totalDuration;
+					const offset =
+						circumference - progressPercent * circumference;
+					progressCircle.style.strokeDashoffset = offset;
+
+					// Change progress bar color when time is running low
+					if (progressPercent < 0.2) {
+						progressCircle.style.stroke = "#ff6b6b";
+					} else if (progressPercent < 0.5) {
+						progressCircle.style.stroke = "#ffd166";
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
